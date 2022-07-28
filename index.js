@@ -38,13 +38,13 @@ module.exports = class NodeLoader {
     yamlNode = require('@node-red/nodes/core/parsers/70-YAML')
 
     //sequence node
-    splitNode = require('@node-red/nodes/nodes/core/sequence/17-split')
-    sortNode = require('@node-red/nodes/nodes/core/sequence/18-sort')
-    batchNode = require('@node-red/nodes/nodes/core/sequence/19-batch')
+    splitNode = require('@node-red/nodes/core/sequence/17-split')
+    sortNode = require('@node-red/nodes/core/sequence/18-sort')
+    batchNode = require('@node-red/nodes/core/sequence/19-batch')
 
     //storage node
-    fileNode = require('@node-red/nodes/nodes/core/storage/10-file')
-    watchNode = require('@node-red/nodes/nodes/core/storage/23-watch')
+    fileNode = require('@node-red/nodes/core/storage/10-file')
+    watchNode = require('@node-red/nodes/core/storage/23-watch')
     nodeDict = {}
     constructor() {
         this.nodeDict = {
