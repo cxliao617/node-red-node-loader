@@ -37,13 +37,13 @@ import xmlNode from '@node-red/nodes/core/parsers/70-XML'
 import yamlNode from '@node-red/nodes/core/parsers/70-YAML'
 
 //sequence node
-import splitNode from '@node-red/nodes/core/sequence/17-split'
-import sortNode from '@node-red/nodes/core/sequence/18-sort'
-import batchNode from '@node-red/nodes/core/sequence/19-batch'
+import splitNode from 'node-red-nodes/nodes/core/sequence/17-split'
+import sortNode from 'node-red-nodes/nodes/core/sequence/18-sort'
+import batchNode from 'node-red-nodes/nodes/core/sequence/19-batch'
 
 //storage node
-import fileNode from '@node-red/nodes/core/storage/10-file'
-import watchNode from '@node-red/nodes/core/storage/23-watch'
+import fileNode from 'node-red-nodes/nodes/core/storage/10-file'
+import watchNode from 'node-red-nodes/nodes/core/storage/23-watch'
 
 export default class NodeLoader {
     nodeDict = {}
