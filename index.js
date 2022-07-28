@@ -104,12 +104,24 @@ module.exports = function NodeLoader(fileString) {
     }
 
     const flowData = JSON.parse(fileString)
-    const nodeArray = _.chain(flowData).map((node) => (node.type)).filter((node) => (node in nodeDict)).uniq().map((node) => (nodeDict[node])).value()
-    const missingNode = _.chain(flowData).map((node) => (node.type)).filter((node) => (nodeDict[node] === undefined)).uniq().value()
-    
-    if (missingNode.length > 0) {
-        console.info(`[Node Loader] Missing custom node: ${missingNode}`)
-    }
+    const nodeArray = _.chain(flowData)
+                    .map((node) => (node.type))
+                    .filter((node) => (node in nodeDict))
+                    .uniq()
+                    .map((node) => (nodeDict[node]))
+                    .value()
+    const missingNode = _.chain(flowData)
+                    .map((node) => (node.type))
+                    .filter((node) => (nodeDict[node] === undefined))
+                    .uniq()
+                    .value()
+    _.chain(missingNode).cond([
+        [_.isEmpty(),console.info(`[Node Loader] All nodes import successfully !!`)],
+        [_.stubTrue,console.info(`[Node Loader] Missing custom node: ${missingNode}`) ]
+    ])
+    // if (missingNode.length > 0) {
+    //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
+    // }
 
     // const originalNodeTypeArray = flowData.map((node) => (node.type))
     // const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
