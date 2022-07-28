@@ -100,10 +100,12 @@ module.exports = function NodeLoader(fileString){
     const flowData = JSON.parse(fileString)
     const originalNodeTypeArray = flowData.map((node) => (node.type))
     const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
+    console.log('uni node',uniqleNodeArray)
     let nodeArray = []
     uniqleNodeTypeArray.forEach((node) => {
         if (nodeDict[node] !== undefined) {
             nodeArray.push(nodeDict[node])
+            console.log('node type: ',node,nodeDict[node])
         }
         else {
             console.info(`[Node Loader WARNING] ${node} cannot find!!`)
@@ -113,3 +115,4 @@ module.exports = function NodeLoader(fileString){
     const uniqleNodeArray = [...new Set(nodeArray)]
     return uniqleNodeArray
 }
+
