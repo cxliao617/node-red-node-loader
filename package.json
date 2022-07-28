@@ -16,5 +16,7 @@
   ],
   "author": "cxliao617",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "node-red": "^3.0.1"
+  }
 }
