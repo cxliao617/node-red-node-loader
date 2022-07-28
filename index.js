@@ -104,6 +104,9 @@ module.exports = function NodeLoader(fileString) {
     }
 
     const flowData = JSON.parse(fileString)
+    const condFunc = _.cond([
+        [(a)=>(_.gt(a.length,0)),(a)=>(console.info(`[Node Loader] Missing custom node: ${a}`))]
+    ])
     const nodeArray = _.chain(flowData)
                     .map((node) => (node.type))
                     .filter((node) => (node in nodeDict))
@@ -114,11 +117,10 @@ module.exports = function NodeLoader(fileString) {
                     .map((node) => (node.type))
                     .filter((node) => (nodeDict[node] === undefined))
                     .uniq()
+                    .condFunc()
                     .value()
-    const condFunc = _.cond([
-        [(a)=>(_.gt(a.length,0)),()=>(console.info(`[Node Loader] Missing custom node: ${missingNode}`))]
-    ])
-    condFunc(missingNode)
+    
+    // condFunc(missingNode)
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
