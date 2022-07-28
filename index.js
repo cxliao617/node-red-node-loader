@@ -1,4 +1,9 @@
+const _ = require('lodash')
+
 module.exports = function NodeLoader(fileString){
+
+    const _ = require('lodash')
+
     //function node
     const functionNode = require('@node-red/nodes/core/function/10-function')
     const switchNode = require('@node-red/nodes/core/function/10-switch')
@@ -98,21 +103,29 @@ module.exports = function NodeLoader(fileString){
     }
     
     const flowData = JSON.parse(fileString)
-    const originalNodeTypeArray = flowData.map((node) => (node.type))
-    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
-    // console.log('uni node',uniqleNodeArray)
-    let nodeArray = []
-    uniqleNodeTypeArray.forEach((node) => {
-        if (nodeDict.hasOwnProperty(node)) {
-            nodeArray.push(nodeDict[node])
-            // console.log('node type: ',node,nodeDict[node])
-        }
-        else {
-            console.info(`[Node Loader WARNING] ${node} cannot find!!`)
-        }
+    const nodeArray = _.chain(flowData).map((node)=>(node.type)).filter((node)=>(node in nodeDict)).uniq().map((node)=>(nodeDict[node])).value()
+    const missingNode = _.chain(flowData).map((node)=>(node.type)).filter((node)=>(nodeDict[node]===undefined)).uniq().value()
+    if(missingNode.length >0)
+    {
+        console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     }
-    )
-    const uniqleNodeArray = [...new Set(nodeArray)]
-    return uniqleNodeArray
+    
+    // const originalNodeTypeArray = flowData.map((node) => (node.type))
+    // const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
+    // // console.log('uni node',uniqleNodeArray)
+    // let nodeArray = []
+    // uniqleNodeTypeArray.forEach((node) => {
+    //     if (nodeDict.hasOwnProperty(node)) {
+    //         nodeArray.push(nodeDict[node])
+    //         // console.log('node type: ',node,nodeDict[node])
+    //     }
+    //     else {
+    //         console.info(`[Node Loader WARNING] ${node} cannot find!!`)
+    //     }
+    // }
+    // )
+    // const uniqleNodeArray = [...new Set(nodeArray)]
+    // return uniqleNodeArray
+    return nodeArray
 }
 

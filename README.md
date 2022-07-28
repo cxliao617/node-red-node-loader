@@ -2,17 +2,17 @@
 Help loading node for Node Test Helper
 
 ## Install
-```terminal=
+```terminal
 $ npm i node-red-node-loader
 ```
 
 ## Usage
-```javascript=
+```javascript
 const nodeArray = NodeLoader(fileString)
 ```
 
 ## Example
-```javascript=
+```javascript
 import NodeLoader from 'node-red-node-loader'
 import helper from 'node-red-node-test-helper'
 import fs from 'fs/promises'
