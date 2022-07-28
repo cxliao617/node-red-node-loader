@@ -1,51 +1,50 @@
-//function node
-import functionNode from 'node-red-nodes/core/function/10-function'
-import switchNode from 'node-red-nodes/core/function/10-switch'
-import changeNode from 'node-red-nodes/core/function/15-change'
-import rangeNode from 'node-red-nodes/core/function/16-range'
-import templateNode from 'node-red-nodes/core/function/80-template'
-import delayNode from 'node-red-nodes/core/function/89-delay'
-import triggerNode from 'node-red-nodes/core/function/89-trigger'
-import execNode from 'node-red-nodes/core/function/90-exec'
-import rbeNode from 'node-red-nodes/core/function/rbe'
+module.exports = class NodeLoader {
+    //function node
+    functionNode = require('@node-red/nodes/core/function/10-function')
+    switchNode = require('node-red-nodes/core/function/10-switch')
+    changeNode = require('node-red-nodes/core/function/15-change')
+    rangeNode = require('node-red-nodes/core/function/16-range')
+    templateNode = require('node-red-nodes/core/function/80-template')
+    delayNode = require('node-red-nodes/core/function/89-delay')
+    triggerNode = require('node-red-nodes/core/function/89-trigger')
+    execNode = require('node-red-nodes/core/function/90-exec')
+    rbeNode = require('node-red-nodes/core/function/rbe')
 
-//common node
-import injectNode from 'node-red-nodes/core/common/20-inject'
-import debugNode from 'node-red-nodes/core/common/21-debug'
-import completeNode from 'node-red-nodes/core/common/24-complete'
-import catchNode from 'node-red-nodes/core/common/25-catch'
-import statusNode from 'node-red-nodes/core/common/25-status'
-import linkNode from 'node-red-nodes/core/common/60-link'
-import commentNode from 'node-red-nodes/core/common/90-comment'
-import unknownNode from 'node-red-nodes/core/common/98-unknown'
+    //common node
+    injectNode = require('node-red-nodes/core/common/20-inject')
+    debugNode = require('node-red-nodes/core/common/21-debug')
+    completeNode = require('node-red-nodes/core/common/24-complete')
+    catchNode = require('node-red-nodes/core/common/25-catch')
+    statusNode = require('node-red-nodes/core/common/25-status')
+    linkNode = require('node-red-nodes/core/common/60-link')
+    commentNode = require('node-red-nodes/core/common/90-comment')
+    unknownNode = require('node-red-nodes/core/common/98-unknown')
 
-//network node
-import tlsNode from 'node-red-nodes/core/network/05-tls'
-import httpproxyNode from 'node-red-nodes/core/network/06-httpproxy'
-import mqttNode from 'node-red-nodes/core/network/10-mqtt'
-import httpinNode from 'node-red-nodes/core/network/21-httpin'
-import httprequestNode from 'node-red-nodes/core/network/21-httprequest'
-import websocketNode from 'node-red-nodess/core/network/22-websocket'
-import tcpinNode from 'node-red-nodes/core/network/31-tcpin'
-import udpNode from 'node-red-nodes/core/network/32-udp'
+    //network node
+    tlsNode = require('node-red-nodes/core/network/05-tls')
+    httpproxyNode = require('node-red-nodes/core/network/06-httpproxy')
+    mqttNode = require('node-red-nodes/core/network/10-mqtt')
+    httpinNode = require('node-red-nodes/core/network/21-httpin')
+    httprequestNode = require('node-red-nodes/core/network/21-httprequest')
+    websocketNode = require('node-red-nodess/core/network/22-websocket')
+    tcpinNode = require('node-red-nodes/core/network/31-tcpin')
+    udpNode = require('node-red-nodes/core/network/32-udp')
 
-//parser node
-import csvNode from 'node-red-nodes/core/parsers/70-CSV'
-import htmlNode from 'node-red-nodes/core/parsers/70-HTML'
-import jsonNode from 'node-red-nodes/core/parsers/70-JSON'
-import xmlNode from 'node-red-nodes/core/parsers/70-XML'
-import yamlNode from 'node-red-nodes/core/parsers/70-YAML'
+    //parser node
+    csvNode = require('node-red-nodes/core/parsers/70-CSV')
+    htmlNode = require('node-red-nodes/core/parsers/70-HTML')
+    jsonNode = require('node-red-nodes/core/parsers/70-JSON')
+    xmlNode = require('node-red-nodes/core/parsers/70-XML')
+    yamlNode = require('node-red-nodes/core/parsers/70-YAML')
 
-//sequence node
-import splitNode from 'node-red-nodes/nodes/core/sequence/17-split'
-import sortNode from 'node-red-nodes/nodes/core/sequence/18-sort'
-import batchNode from 'node-red-nodes/nodes/core/sequence/19-batch'
+    //sequence node
+    splitNode = require('node-red-nodes/nodes/core/sequence/17-split')
+    sortNode = require('node-red-nodes/nodes/core/sequence/18-sort')
+    batchNode = require('node-red-nodes/nodes/core/sequence/19-batch')
 
-//storage node
-import fileNode from 'node-red-nodes/nodes/core/storage/10-file'
-import watchNode from 'node-red-nodes/nodes/core/storage/23-watch'
-
-class NodeLoader {
+    //storage node
+    fileNode = require('node-red-nodes/nodes/core/storage/10-file')
+    watchNode = require('node-red-nodes/nodes/core/storage/23-watch')
     nodeDict = {}
     constructor() {
         this.nodeDict = {
@@ -54,65 +53,61 @@ class NodeLoader {
             "change": changeNode,
             "range": rangeNode,
             "template": templateNode,
-            "delay":delayNode,
-            "trigger":triggerNode,
-            "exec":execNode,
-            "rbe":rbeNode,
-            "inject":injectNode,
-            "debug":debugNode,
-            "complete":completeNode,
-            "catch":catchNode,
-            "status":statusNode,
-            "link in":linkNode,
-            "link out":linkNode,
-            "link call":linkNode,
-            "comment":commentNode,
-            "unknown":unknownNode,
-            "tls-config":tlsNode,
-            "http proxy":httpproxyNode,
+            "delay": delayNode,
+            "trigger": triggerNode,
+            "exec": execNode,
+            "rbe": rbeNode,
+            "inject": injectNode,
+            "debug": debugNode,
+            "complete": completeNode,
+            "catch": catchNode,
+            "status": statusNode,
+            "link in": linkNode,
+            "link out": linkNode,
+            "link call": linkNode,
+            "comment": commentNode,
+            "unknown": unknownNode,
+            "tls-config": tlsNode,
+            "http proxy": httpproxyNode,
             "mqtt-broker": mqttNode,
-            "mqtt in":mqttNode,
-            "mqtt out":mqttNode,
-            "http request":httprequestNode,
-            "http response":httpinNode,
-            "http in":httpinNode,
-            "websocket-listener":websocketNode,
-            "websocket-client":websocketNode,
-            "websocket out":websocketNode,
-            "websocket in":websocketNode,
-            "tcp in":tcpinNode,
-            "tcp out":tcpinNode,
+            "mqtt in": mqttNode,
+            "mqtt out": mqttNode,
+            "http request": httprequestNode,
+            "http response": httpinNode,
+            "http in": httpinNode,
+            "websocket-listener": websocketNode,
+            "websocket-client": websocketNode,
+            "websocket out": websocketNode,
+            "websocket in": websocketNode,
+            "tcp in": tcpinNode,
+            "tcp out": tcpinNode,
             "tcp request": tcpinNode,
-            "udp in":udpNode,
-            "udp out":udpNode,
-            "csv":csvNode,
-            "html":htmlNode,
-            "json":jsonNode,
-            "xml":xmlNode,
-            "yaml":yamlNode,
-            "split":splitNode,
-            "join":splitNode,
-            "sort":sortNode,
-            "batch":batchNode,
-            "file":fileNode,
-            "file in":fileNode,
+            "udp in": udpNode,
+            "udp out": udpNode,
+            "csv": csvNode,
+            "html": htmlNode,
+            "json": jsonNode,
+            "xml": xmlNode,
+            "yaml": yamlNode,
+            "split": splitNode,
+            "join": splitNode,
+            "sort": sortNode,
+            "batch": batchNode,
+            "file": fileNode,
+            "file in": fileNode,
             "watch": watchNode
         }
     }
-    getNodeArray(fileString)
-    {
+    getNodeArray(fileString) {
         const flowData = JSON.parse(fileString)
-        const originalNodeTypeArray = flowData.map((node)=>(node.type))
+        const originalNodeTypeArray = flowData.map((node) => (node.type))
         const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
         let nodeArray = []
-        uniqleNodeTypeArray.forEach((node)=>
-        {
-            if(this.nodeDict[node]!==undefined)
-            {
+        uniqleNodeTypeArray.forEach((node) => {
+            if (this.nodeDict[node] !== undefined) {
                 nodeArray.push(this.nodeDict[node])
             }
-            else
-            {
+            else {
                 console.info(`[Node Loader WARNING] ${node} cannot find!!`)
             }
         }
@@ -121,5 +116,3 @@ class NodeLoader {
         return uniqleNodeArray
     }
 }
-
-module.exports = NodeLoader
