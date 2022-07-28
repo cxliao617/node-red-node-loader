@@ -1,0 +1,22 @@
+{
+  "name": "node-red-node-loader",
+  "version": "1.0.0",
+  "description": "Help loading node when using Node Test Helper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-cxliao617:cxliao617/node-red-node-loader.git"
+  },
+  "keywords": [
+    "node-red",
+    "node-red-test-helper"
+  ],
+  "author": "cxliao617",
+  "license": "ISC",
+  "dependencies": {
+    "node-red": "^3.0.1"
+  }
+}
