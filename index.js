@@ -116,7 +116,7 @@ module.exports = function NodeLoader(fileString) {
                     .uniq()
                     .value()
     const condFunc = _.cond([
-        [(a)=>(_.gt(a.length,0)),console.info(`[Node Loader] Missing custom node: ${missingNode}`)]
+        [(a)=>(_.gt(a.length,0)),()=>(console.info(`[Node Loader] Missing custom node: ${missingNode}`))]
     ])
     condFunc(missingNode)
     // if (missingNode.length > 0) {
