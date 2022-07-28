@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com-cxliao617:cxliao617/node-red-node-loader.git"
+    "url": "git@github.com:cxliao617/node-red-node-loader.git"
   },
   "keywords": [
     "node-red",

@@ -43,3 +43,4 @@ describe("test node red flow",()=>{
 } )
 ```
 [Example repo](https://github.com/cxliao617/node-red-node-loader-example/tree/dev)
+[node loader repo](https://github.com/cxliao617/node-red-node-loader/tree/dev)
