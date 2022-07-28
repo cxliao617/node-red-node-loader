@@ -1,53 +1,51 @@
-module.exports = class NodeLoader {
+module.exports = function NodeLoader(fileString){
     //function node
-    functionNode = require('@node-red/nodes/core/function/10-function')
-    switchNode = require('@node-red/nodes/core/function/10-switch')
-    changeNode = require('@node-red/nodes/core/function/15-change')
-    rangeNode = require('@node-red/nodes/core/function/16-range')
-    templateNode = require('@node-red/nodes/core/function/80-template')
-    delayNode = require('@node-red/nodes/core/function/89-delay')
-    triggerNode = require('@node-red/nodes/core/function/89-trigger')
-    execNode = require('@node-red/nodes/core/function/90-exec')
-    rbeNode = require('@node-red/nodes/core/function/rbe')
+    const functionNode = require('@node-red/nodes/core/function/10-function')
+    const switchNode = require('@node-red/nodes/core/function/10-switch')
+    const changeNode = require('@node-red/nodes/core/function/15-change')
+    const rangeNode = require('@node-red/nodes/core/function/16-range')
+    const templateNode = require('@node-red/nodes/core/function/80-template')
+    const delayNode = require('@node-red/nodes/core/function/89-delay')
+    const triggerNode = require('@node-red/nodes/core/function/89-trigger')
+    const execNode = require('@node-red/nodes/core/function/90-exec')
+    const rbeNode = require('@node-red/nodes/core/function/rbe')
 
     //common node
-    injectNode = require('@node-red/nodes/core/common/20-inject')
-    debugNode = require('@node-red/nodes/core/common/21-debug')
-    completeNode = require('@node-red/nodes/core/common/24-complete')
-    catchNode = require('@node-red/nodes/core/common/25-catch')
-    statusNode = require('@node-red/nodes/core/common/25-status')
-    linkNode = require('@node-red/nodes/core/common/60-link')
-    commentNode = require('@node-red/nodes/core/common/90-comment')
-    unknownNode = require('@node-red/nodes/core/common/98-unknown')
+    const injectNode = require('@node-red/nodes/core/common/20-inject')
+    const debugNode = require('@node-red/nodes/core/common/21-debug')
+    const completeNode = require('@node-red/nodes/core/common/24-complete')
+    const catchNode = require('@node-red/nodes/core/common/25-catch')
+    const statusNode = require('@node-red/nodes/core/common/25-status')
+    const linkNode = require('@node-red/nodes/core/common/60-link')
+    const commentNode = require('@node-red/nodes/core/common/90-comment')
+    const unknownNode = require('@node-red/nodes/core/common/98-unknown')
 
     //network node
-    tlsNode = require('@node-red/nodes/core/network/05-tls')
-    httpproxyNode = require('@node-red/nodes/core/network/06-httpproxy')
-    mqttNode = require('@node-red/nodes/core/network/10-mqtt')
-    httpinNode = require('@node-red/nodes/core/network/21-httpin')
-    httprequestNode = require('@node-red/nodes/core/network/21-httprequest')
-    websocketNode = require('@node-red/nodes/core/network/22-websocket')
-    tcpinNode = require('@node-red/nodes/core/network/31-tcpin')
-    udpNode = require('@node-red/nodes/core/network/32-udp')
+    const tlsNode = require('@node-red/nodes/core/network/05-tls')
+    const httpproxyNode = require('@node-red/nodes/core/network/06-httpproxy')
+    const mqttNode = require('@node-red/nodes/core/network/10-mqtt')
+    const httpinNode = require('@node-red/nodes/core/network/21-httpin')
+    const httprequestNode = require('@node-red/nodes/core/network/21-httprequest')
+    const websocketNode = require('@node-red/nodes/core/network/22-websocket')
+    const tcpinNode = require('@node-red/nodes/core/network/31-tcpin')
+    const udpNode = require('@node-red/nodes/core/network/32-udp')
 
     //parser node
-    csvNode = require('@node-red/nodes/core/parsers/70-CSV')
-    htmlNode = require('@node-red/nodes/core/parsers/70-HTML')
-    jsonNode = require('@node-red/nodes/core/parsers/70-JSON')
-    xmlNode = require('@node-red/nodes/core/parsers/70-XML')
-    yamlNode = require('@node-red/nodes/core/parsers/70-YAML')
+    const csvNode = require('@node-red/nodes/core/parsers/70-CSV')
+    const htmlNode = require('@node-red/nodes/core/parsers/70-HTML')
+    const jsonNode = require('@node-red/nodes/core/parsers/70-JSON')
+    const xmlNode = require('@node-red/nodes/core/parsers/70-XML')
+    const yamlNode = require('@node-red/nodes/core/parsers/70-YAML')
 
     //sequence node
-    splitNode = require('@node-red/nodes/core/sequence/17-split')
-    sortNode = require('@node-red/nodes/core/sequence/18-sort')
-    batchNode = require('@node-red/nodes/core/sequence/19-batch')
+    const splitNode = require('@node-red/nodes/core/sequence/17-split')
+    const sortNode = require('@node-red/nodes/core/sequence/18-sort')
+    const batchNode = require('@node-red/nodes/core/sequence/19-batch')
 
     //storage node
-    fileNode = require('@node-red/nodes/core/storage/10-file')
-    watchNode = require('@node-red/nodes/core/storage/23-watch')
-    nodeDict = {}
-    constructor() {
-        this.nodeDict = {
+    const fileNode = require('@node-red/nodes/core/storage/10-file')
+    const watchNode = require('@node-red/nodes/core/storage/23-watch')
+    const nodeDict = {
             "function": functionNode,
             "switch": switchNode,
             "change": changeNode,
@@ -96,23 +94,22 @@ module.exports = class NodeLoader {
             "file": fileNode,
             "file in": fileNode,
             "watch": watchNode
+        
+    }
+    
+    const flowData = JSON.parse(fileString)
+    const originalNodeTypeArray = flowData.map((node) => (node.type))
+    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
+    let nodeArray = []
+    uniqleNodeTypeArray.forEach((node) => {
+        if (nodeDict[node] !== undefined) {
+            nodeArray.push(nodeDict[node])
+        }
+        else {
+            console.info(`[Node Loader WARNING] ${node} cannot find!!`)
         }
     }
-    getNodeArray(fileString) {
-        const flowData = JSON.parse(fileString)
-        const originalNodeTypeArray = flowData.map((node) => (node.type))
-        const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
-        let nodeArray = []
-        uniqleNodeTypeArray.forEach((node) => {
-            if (this.nodeDict[node] !== undefined) {
-                nodeArray.push(this.nodeDict[node])
-            }
-            else {
-                console.info(`[Node Loader WARNING] ${node} cannot find!!`)
-            }
-        }
-        )
-        const uniqleNodeArray = [...new Set(nodeArray)]
-        return uniqleNodeArray
-    }
+    )
+    const uniqleNodeArray = [...new Set(nodeArray)]
+    return uniqleNodeArray
 }
