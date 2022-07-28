@@ -1,6 +1,6 @@
 const _ = require('lodash')
 
-module.exports = function NodeLoader(fileString){
+module.exports = function NodeLoader(fileString) {
 
     const _ = require('lodash')
 
@@ -50,66 +50,67 @@ module.exports = function NodeLoader(fileString){
     //storage node
     const fileNode = require('@node-red/nodes/core/storage/10-file')
     const watchNode = require('@node-red/nodes/core/storage/23-watch')
+
     const nodeDict = {
-            "function": functionNode,
-            "switch": switchNode,
-            "change": changeNode,
-            "range": rangeNode,
-            "template": templateNode,
-            "delay": delayNode,
-            "trigger": triggerNode,
-            "exec": execNode,
-            "rbe": rbeNode,
-            "inject": injectNode,
-            "debug": debugNode,
-            "complete": completeNode,
-            "catch": catchNode,
-            "status": statusNode,
-            "link in": linkNode,
-            "link out": linkNode,
-            "link call": linkNode,
-            "comment": commentNode,
-            "unknown": unknownNode,
-            "tls-config": tlsNode,
-            "http proxy": httpproxyNode,
-            "mqtt-broker": mqttNode,
-            "mqtt in": mqttNode,
-            "mqtt out": mqttNode,
-            "http request": httprequestNode,
-            "http response": httpinNode,
-            "http in": httpinNode,
-            "websocket-listener": websocketNode,
-            "websocket-client": websocketNode,
-            "websocket out": websocketNode,
-            "websocket in": websocketNode,
-            "tcp in": tcpinNode,
-            "tcp out": tcpinNode,
-            "tcp request": tcpinNode,
-            "udp in": udpNode,
-            "udp out": udpNode,
-            "csv": csvNode,
-            "html": htmlNode,
-            "json": jsonNode,
-            "xml": xmlNode,
-            "yaml": yamlNode,
-            "split": splitNode,
-            "join": splitNode,
-            "sort": sortNode,
-            "batch": batchNode,
-            "file": fileNode,
-            "file in": fileNode,
-            "watch": watchNode
-        
+        "function": functionNode,
+        "switch": switchNode,
+        "change": changeNode,
+        "range": rangeNode,
+        "template": templateNode,
+        "delay": delayNode,
+        "trigger": triggerNode,
+        "exec": execNode,
+        "rbe": rbeNode,
+        "inject": injectNode,
+        "debug": debugNode,
+        "complete": completeNode,
+        "catch": catchNode,
+        "status": statusNode,
+        "link in": linkNode,
+        "link out": linkNode,
+        "link call": linkNode,
+        "comment": commentNode,
+        "unknown": unknownNode,
+        "tls-config": tlsNode,
+        "http proxy": httpproxyNode,
+        "mqtt-broker": mqttNode,
+        "mqtt in": mqttNode,
+        "mqtt out": mqttNode,
+        "http request": httprequestNode,
+        "http response": httpinNode,
+        "http in": httpinNode,
+        "websocket-listener": websocketNode,
+        "websocket-client": websocketNode,
+        "websocket out": websocketNode,
+        "websocket in": websocketNode,
+        "tcp in": tcpinNode,
+        "tcp out": tcpinNode,
+        "tcp request": tcpinNode,
+        "udp in": udpNode,
+        "udp out": udpNode,
+        "csv": csvNode,
+        "html": htmlNode,
+        "json": jsonNode,
+        "xml": xmlNode,
+        "yaml": yamlNode,
+        "split": splitNode,
+        "join": splitNode,
+        "sort": sortNode,
+        "batch": batchNode,
+        "file": fileNode,
+        "file in": fileNode,
+        "watch": watchNode
+
     }
-    
+
     const flowData = JSON.parse(fileString)
-    const nodeArray = _.chain(flowData).map((node)=>(node.type)).filter((node)=>(node in nodeDict)).uniq().map((node)=>(nodeDict[node])).value()
-    const missingNode = _.chain(flowData).map((node)=>(node.type)).filter((node)=>(nodeDict[node]===undefined)).uniq().value()
-    if(missingNode.length >0)
-    {
+    const nodeArray = _.chain(flowData).map((node) => (node.type)).filter((node) => (node in nodeDict)).uniq().map((node) => (nodeDict[node])).value()
+    const missingNode = _.chain(flowData).map((node) => (node.type)).filter((node) => (nodeDict[node] === undefined)).uniq().value()
+    
+    if (missingNode.length > 0) {
         console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     }
-    
+
     // const originalNodeTypeArray = flowData.map((node) => (node.type))
     // const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
     // // console.log('uni node',uniqleNodeArray)
