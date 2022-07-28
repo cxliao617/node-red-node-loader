@@ -115,10 +115,10 @@ module.exports = function NodeLoader(fileString) {
                     .filter((node) => (nodeDict[node] === undefined))
                     .uniq()
                     .value()
-    _.chain(missingNode).cond([
-        [_.isEmpty(),console.info(`[Node Loader] All nodes import successfully !!`)],
-        [_.stubTrue,console.info(`[Node Loader] Missing custom node: ${missingNode}`) ]
+    const condFunc = _.cond([
+        [(a)=>(_.gt(a.length,0)),console.info(`[Node Loader] Missing custom node: ${missingNode}`)]
     ])
+    condFunc(missingNode)
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
