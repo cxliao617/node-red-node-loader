@@ -45,7 +45,7 @@ import batchNode from 'node-red-nodes/nodes/core/sequence/19-batch'
 import fileNode from 'node-red-nodes/nodes/core/storage/10-file'
 import watchNode from 'node-red-nodes/nodes/core/storage/23-watch'
 
-export default class NodeLoader {
+class NodeLoader {
     nodeDict = {}
     constructor() {
         this.nodeDict = {
@@ -121,3 +121,5 @@ export default class NodeLoader {
         return uniqleNodeArray
     }
 }
+
+module.exports = NodeLoader
