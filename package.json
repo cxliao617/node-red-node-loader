@@ -1,6 +1,6 @@
 {
   "name": "node-red-node-loader",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Help loading node when using Node Test Helper",
   "main": "index.js",
   "scripts": {
