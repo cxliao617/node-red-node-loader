@@ -1,4 +1,4 @@
-const _ = require("lodash");
+
 
 module.exports = function NodeLoader(fileString) {
     const _ = require("lodash");
@@ -104,20 +104,20 @@ module.exports = function NodeLoader(fileString) {
     const flowData = JSON.parse(fileString);
     const condFunc = _.cond([
         [
-            (a) => _.gt(a.length, 0),
-            (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+            (a) => (_.gt(a.length, 0)),
+            (a) => (console.info(`[Node Loader] Missing custom node: ${a}`)),
         ],
     ]);
     const checkInDict = (node) => (node in nodeDict)
     const nodeArray = _.chain(flowData)
-        .map((node) => node.type)
+        .map((node) => (node.type))
         .filter(checkInDict)
         .uniq()
         .value()
         .map((node) => nodeDict[node])
         
     const missingNode = _.chain(flowData)
-        .map((node) => node.type)
+        .map((node) => (node.type))
         .filter(_.negate(checkInDict))
         .uniq()
         .value();
@@ -143,5 +143,5 @@ module.exports = function NodeLoader(fileString) {
     // )
     // const uniqleNodeArray = [...new Set(nodeArray)]
     // return uniqleNodeArray
-    return _.uniq(nodeArray);
+    return [...new Set(nodeArray)]
 };
