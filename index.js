@@ -146,7 +146,7 @@ module.exports = function NodeLoader(fileString) {
         }
     }
     )
-    
+    console.log(originalNodeTypeArray,uniqleNodeTypeArray)
     const uniqleNodeArray = [...new Set(nodeArray)]
     return uniqleNodeArray
     // console.log(nodeArray,uniqleNodeArray)
