@@ -2,8 +2,13 @@
   "name": "node-red-node-loader",
   "version": "1.2.7",
   "description": "Help loading node when using Node Test Helper",
-  "main": "index.js",
+  "main": "dist/NodeLoader.cjs.js",
+  "module": "dist/NodeLoader.esm.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +22,12 @@
   "author": "cxliao617",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "node-red": "^3.0.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.77.2"
   }
 }
