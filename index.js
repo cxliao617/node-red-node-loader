@@ -118,10 +118,9 @@ module.exports = function NodeLoader(fileString) {
         .map((node) => node.type)
         .filter((node) => nodeDict[node] === undefined)
         .uniq()
-        .condFunc()
         .value();
 
-    // condFunc(missingNode)
+    condFunc(missingNode)
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
