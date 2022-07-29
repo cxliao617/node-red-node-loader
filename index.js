@@ -108,15 +108,16 @@ module.exports = function NodeLoader(fileString) {
             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
         ],
     ]);
+    const checkInDict = (node) => (node in nodeDict)
     const nodeArray = _.chain(flowData)
         .map((node) => node.type)
-        .filter((node) => node in nodeDict)
+        .filter(checkInDict)
         .uniq()
         .map((node) => nodeDict[node])
         .value();
     const missingNode = _.chain(flowData)
         .map((node) => node.type)
-        .filter((node) => nodeDict[node] === undefined)
+        .filter(_.negate(checkInDict))
         .uniq()
         .value();
 
