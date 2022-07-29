@@ -141,7 +141,7 @@ module.exports = function NodeLoader(fileString) {
     //     }
     // }
     // )
-    // const uniqleNodeArray = [...new Set(nodeArray)]
-    // return uniqleNodeArray
-    return [...new Set(nodeArray)]
+    const uniqleNodeArray = [...new Set(nodeArray)]
+    return uniqleNodeArray
+    // return [...new Set(nodeArray)]
 };
