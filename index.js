@@ -109,18 +109,15 @@ module.exports = function NodeLoader(fileString) {
         ],
     ]);
 
-    console.log(lodash.camelCase('TestSample'))
     const checkInDict = (node) => (node in nodeDict)
-    const nodeTypeArray = lodash.chain(flowData)
+    const nodeArray = lodash.chain(flowData)
         .map((node) => (node.type))
         .uniq()
-        .value()
-    const nodeArray = lodash.chain(nodeTypeArray)
         .filter(checkInDict)
         .uniq()
         .map((node) => nodeDict[node])
+        .value()
 
-    console.log(nodeTypeArray)
     const missingNode = lodash.chain(flowData)
         .map((node) => (node.type))
         .uniq()
