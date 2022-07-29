@@ -1,7 +1,7 @@
-const _ = require("lodash");
+
 
 module.exports = function NodeLoader(fileString) {
-    
+    const lodash = require('lodash')
 
     //function node
     const functionNode = require("@node-red/nodes/core/function/10-function");
@@ -102,23 +102,25 @@ module.exports = function NodeLoader(fileString) {
     };
 
     const flowData = JSON.parse(fileString);
-    const condFunc = _.cond([
+    const condFunc = lodash.cond([
         [
-            (a) => (_.gt(a.length, 0)),
+            (a) => (lodash.gt(a.length, 0)),
             (a) => (console.info(`[Node Loader] Missing custom node: ${a}`)),
         ],
     ]);
+
+    console.log(lodash.camelCase('TestSample'))
     const checkInDict = (node) => (node in nodeDict)
-    const nodeArray = _.chain(flowData)
+    const nodeArray = lodash.chain(flowData)
         .map((node) => (node.type))
         .filter(checkInDict)
         .uniq()
         .value()
         .map((node) => nodeDict[node])
         
-    const missingNode = _.chain(flowData)
+    const missingNode = lodash.chain(flowData)
         .map((node) => (node.type))
-        .filter(_.negate(checkInDict))
+        .filter(lodash.negate(checkInDict))
         .uniq()
         .value();
 
