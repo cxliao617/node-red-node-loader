@@ -1,4 +1,4 @@
-module.exports = function NodeLoader() {
+module.exports = function NodeLoader(fileString) {
     const lodash = require("lodash");
 
     //function node
@@ -99,38 +99,38 @@ module.exports = function NodeLoader() {
         watch: watchNode,
     };
 
-    function getNodeArray(fileString) {
-        const flowData = JSON.parse(fileString);
-        const condFunc = lodash.cond([
-            [
-                (a) => lodash.gt(a.length, 0),
-                (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
-            ],
-        ]);
+    
+    const flowData = JSON.parse(fileString);
+    const condFunc = lodash.cond([
+        [
+            (a) => lodash.gt(a.length, 0),
+            (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+        ],
+    ]);
 
-        const checkInDict = (node) => node in nodeDict;
-        const nodeArray = lodash
-            .chain(flowData)
-            .map((node) => node.type)
-            .uniq()
-            .filter(checkInDict)
-            .uniq()
-            .value()
-            .map((node) => nodeDict[node]);
+    const checkInDict = (node) => node in nodeDict;
+    const nodeArray = lodash
+        .chain(flowData)
+        .map((node) => node.type)
+        .uniq()
+        .filter(checkInDict)
+        .uniq()
+        .value()
+        .map((node) => nodeDict[node]);
 
-        // console.log(nodeArray)
+    // console.log(nodeArray)
 
-        const missingNode = lodash
-            .chain(flowData)
-            .map((node) => node.type)
-            .uniq()
-            .filter(lodash.negate(checkInDict))
-            .uniq()
-            .value();
+    const missingNode = lodash
+        .chain(flowData)
+        .map((node) => node.type)
+        .uniq()
+        .filter(lodash.negate(checkInDict))
+        .uniq()
+        .value();
 
-        condFunc(missingNode);
-        return lodash.uniq(nodeArray);
-    }
+    condFunc(missingNode);
+    return lodash.uniq(nodeArray);
+    
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
