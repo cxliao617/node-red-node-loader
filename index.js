@@ -1,4 +1,3 @@
-module.exports = function NodeLoader(fileString) {
     const lodash = require("lodash");
 
     //function node
@@ -47,6 +46,10 @@ module.exports = function NodeLoader(fileString) {
     //storage node
     const fileNode = require("./nodes/core/storage/10-file");
     const watchNode = require("./nodes/core/storage/23-watch");
+
+
+NodeLoader = function(fileString) {
+    
 
     const nodeDict = {
         function: functionNode,
@@ -156,3 +159,5 @@ module.exports = function NodeLoader(fileString) {
 
     // return [...new Set(nodeArray)]
 };
+
+module.exports = NodeLoader
