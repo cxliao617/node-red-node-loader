@@ -1,7 +1,7 @@
-
+const _ = require("lodash");
 
 module.exports = function NodeLoader(fileString) {
-    const _ = require("lodash");
+    
 
     //function node
     const functionNode = require("@node-red/nodes/core/function/10-function");
@@ -141,7 +141,10 @@ module.exports = function NodeLoader(fileString) {
     //     }
     // }
     // )
+    
     const uniqleNodeArray = [...new Set(nodeArray)]
+
+    console.log(nodeArray,uniqleNodeArray)
     return uniqleNodeArray
     // return [...new Set(nodeArray)]
 };
