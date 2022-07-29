@@ -105,11 +105,13 @@ class NodeLoader{
             ],
         ]);
 
-        const checkInDict = (node) => (node in this.nodeDict && _.negate(node in excludeList));
+        const checkInDict = (node) => (node in this.nodeDict);
+        const excludeFunc = (node) => (excludeList.includes(node));
         const nodeArray = _.chain(flowData)
             .map((node) => node.type)
             .uniq()
             .filter(checkInDict)
+            .filter(_.negate(excludeFunc))
             .uniq()
             .value()
             .map((node) => (this.nodeDict[node]));
