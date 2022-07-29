@@ -119,7 +119,8 @@ module.exports = function NodeLoader(fileString) {
         .filter(checkInDict)
         .uniq()
         .map((node) => nodeDict[node])
-        
+
+    console.log(nodeTypeArray)
     const missingNode = lodash.chain(flowData)
         .map((node) => (node.type))
         .uniq()
