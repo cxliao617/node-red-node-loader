@@ -102,54 +102,54 @@ module.exports = function NodeLoader(fileString) {
     };
 
     const flowData = JSON.parse(fileString);
-    // const condFunc = lodash.cond([
-    //     [
-    //         (a) => (lodash.gt(a.length, 0)),
-    //         (a) => (console.info(`[Node Loader] Missing custom node: ${a}`)),
-    //     ],
-    // ]);
+    const condFunc = lodash.cond([
+        [
+            (a) => (lodash.gt(a.length, 0)),
+            (a) => (console.info(`[Node Loader] Missing custom node: ${a}`)),
+        ],
+    ]);
 
-    // const checkInDict = (node) => (node in nodeDict)
-    // const nodeArray = lodash.chain(flowData)
-    //     .map((node) => (node.type))
-    //     .uniq()
-    //     .filter(checkInDict)
-    //     .uniq()
-    //     .value()
-    //     .map((node) => nodeDict[node])
+    const checkInDict = (node) => (node in nodeDict)
+    const nodeArray = lodash.chain(flowData)
+        .map((node) => (node.type))
+        .uniq()
+        .filter(checkInDict)
+        .uniq()
+        .value()
+        .map((node) => nodeDict[node])
         
-    //     console.log(nodeArray)
+        console.log(nodeArray)
 
-    // const missingNode = lodash.chain(flowData)
-    //     .map((node) => (node.type))
-    //     .uniq()
-    //     .filter(lodash.negate(checkInDict))
-    //     .uniq()
-    //     .value();
+    const missingNode = lodash.chain(flowData)
+        .map((node) => (node.type))
+        .uniq()
+        .filter(lodash.negate(checkInDict))
+        .uniq()
+        .value();
 
-    // condFunc(missingNode)
+    condFunc(missingNode)
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
 
-    const originalNodeTypeArray = flowData.map((node) => (node.type))
-    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
-    // console.log('uni node',uniqleNodeArray)
-    let nodeArray = []
-    uniqleNodeTypeArray.forEach((node) => {
-        if (nodeDict.hasOwnProperty(node)) {
-            nodeArray.push(nodeDict[node])
-            // console.log('node type: ',node,nodeDict[node])
-        }
-        else {
-            console.info(`[Node Loader WARNING] ${node} cannot find!!`)
-        }
-    }
-    )
-    console.log(originalNodeTypeArray,uniqleNodeTypeArray)
-    const uniqleNodeArray = [...new Set(nodeArray)]
-    return uniqleNodeArray
+    // const originalNodeTypeArray = flowData.map((node) => (node.type))
+    // const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
+    // // console.log('uni node',uniqleNodeArray)
+    // let nodeArray = []
+    // uniqleNodeTypeArray.forEach((node) => {
+    //     if (nodeDict.hasOwnProperty(node)) {
+    //         nodeArray.push(nodeDict[node])
+    //         // console.log('node type: ',node,nodeDict[node])
+    //     }
+    //     else {
+    //         console.info(`[Node Loader WARNING] ${node} cannot find!!`)
+    //     }
+    // }
+    // )
+    // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
+    // const uniqleNodeArray = [...new Set(nodeArray)]
+    // return uniqleNodeArray
     // console.log(nodeArray,uniqleNodeArray)
-    // return lodash.uniq(nodeArray)
+    return lodash.uniq(nodeArray)
     // return [...new Set(nodeArray)]
 };
