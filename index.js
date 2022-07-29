@@ -1,138 +1,141 @@
-    const lodash = require("lodash");
+//function node
+import functionNode from './nodes/core/function/10-function'
+import switchNode from './nodes/core/function/10-switch'
+import changeNode from './nodes/core/function/15-change'
+import rangeNode from './nodes/core/function/16-range'
+import templateNode from './nodes/core/function/80-template'
+import delayNode from './nodes/core/function/89-delay'
+import triggerNode from './nodes/core/function/89-trigger'
+import execNode from './nodes/core/function/90-exec'
+import rbeNode from './nodes/core/function/rbe'
 
-    //function node
-    const functionNode = require("./nodes/core/function/10-function");
-    const switchNode = require("./nodes/core/function/10-switch");
-    const changeNode = require("./nodes/core/function/15-change");
-    const rangeNode = require("./nodes/core/function/16-range");
-    const templateNode = require("./nodes/core/function/80-template");
-    const delayNode = require("./nodes/core/function/89-delay");
-    const triggerNode = require("./nodes/core/function/89-trigger");
-    const execNode = require("./nodes/core/function/90-exec");
-    const rbeNode = require("./nodes/core/function/rbe");
+//common node
+import injectNode from './nodes/core/common/20-inject'
+import debugNode from './nodes/core/common/21-debug'
+import completeNode from './nodes/core/common/24-complete'
+import catchNode from './nodes/core/common/25-catch'
+import statusNode from './nodes/core/common/25-status'
+import linkNode from './nodes/core/common/60-link'
+import commentNode from './nodes/core/common/90-comment'
+import unknownNode from './nodes/core/common/98-unknown'
 
-    //common node
-    const injectNode = require("./nodes/core/common/20-inject");
-    const debugNode = require("./nodes/core/common/21-debug");
-    const completeNode = require("./nodes/core/common/24-complete");
-    const catchNode = require("./nodes/core/common/25-catch.js");
-    const statusNode = require("./nodes/core/common/25-status");
-    const linkNode = require("./nodes/core/common/60-link");
-    const commentNode = require("./nodes/core/common/90-comment");
-    const unknownNode = require("./nodes/core/common/98-unknown");
+//network node
+import tlsNode from './nodes/core/network/05-tls'
+import httpproxyNode from './nodes/core/network/06-httpproxy'
+import mqttNode from './nodes/core/network/10-mqtt'
+import httpinNode from './nodes/core/network/21-httpin'
+import httprequestNode from './nodes/core/network/21-httprequest'
+import websocketNode from './nodes/core/network/22-websocket'
+import tcpinNode from './nodes/core/network/31-tcpin'
+import udpNode from './nodes/core/network/32-udp'
 
-    //network node
-    const tlsNode = require("./nodes/core/network/05-tls");
-    const httpproxyNode = require("./nodes/core/network/06-httpproxy");
-    const mqttNode = require("./nodes/core/network/10-mqtt");
-    const httpinNode = require("./nodes/core/network/21-httpin");
-    const httprequestNode = require("./nodes/core/network/21-httprequest");
-    const websocketNode = require("./nodes/core/network/22-websocket");
-    const tcpinNode = require("./nodes/core/network/31-tcpin");
-    const udpNode = require("./nodes/core/network/32-udp");
+//parser node
+import csvNode from './nodes/core/parsers/70-CSV'
+import htmlNode from './nodes/core/parsers/70-HTML'
+import jsonNode from './nodes/core/parsers/70-JSON'
+import xmlNode from './nodes/core/parsers/70-XML'
+import yamlNode from './nodes/core/parsers/70-YAML'
 
-    //parser node
-    const csvNode = require("./nodes/core/parsers/70-CSV");
-    const htmlNode = require("./nodes/core/parsers/70-HTML");
-    const jsonNode = require("./nodes/core/parsers/70-JSON");
-    const xmlNode = require("./nodes/core/parsers/70-XML");
-    const yamlNode = require("./nodes/core/parsers/70-YAML");
+//sequence node
+import splitNode from './nodes/core/sequence/17-split'
+import sortNode from './nodes/core/sequence/18-sort'
+import batchNode from './nodes/core/sequence/19-batch'
 
-    //sequence node
-    const splitNode = require("./nodes/core/sequence/17-split");
-    const sortNode = require("./nodes/core/sequence/18-sort");
-    const batchNode = require("./nodes/core/sequence/19-batch");
+//storage node
+import fileNode from './nodes/core/storage/10-file'
+import watchNode from './nodes/core/storage/23-watch'
 
-    //storage node
-    const fileNode = require("./nodes/core/storage/10-file");
-    const watchNode = require("./nodes/core/storage/23-watch");
+import _ from 'lodash'
 
 
-NodeLoader = function(fileString) {
+export class NodeLoader{
+    nodeDict = {}
+    constructor(){
+        this.nodeDict = {
+            function: functionNode,
+            switch: switchNode,
+            change: changeNode,
+            range: rangeNode,
+            template: templateNode,
+            delay: delayNode,
+            trigger: triggerNode,
+            exec: execNode,
+            rbe: rbeNode,
+            inject: injectNode,
+            debug: debugNode,
+            complete: completeNode,
+            catch: catchNode,
+            status: statusNode,
+            "link in": linkNode,
+            "link out": linkNode,
+            "link call": linkNode,
+            comment: commentNode,
+            unknown: unknownNode,
+            "tls-config": tlsNode,
+            "http proxy": httpproxyNode,
+            "mqtt-broker": mqttNode,
+            "mqtt in": mqttNode,
+            "mqtt out": mqttNode,
+            "http request": httprequestNode,
+            "http response": httpinNode,
+            "http in": httpinNode,
+            "websocket-listener": websocketNode,
+            "websocket-client": websocketNode,
+            "websocket out": websocketNode,
+            "websocket in": websocketNode,
+            "tcp in": tcpinNode,
+            "tcp out": tcpinNode,
+            "tcp request": tcpinNode,
+            "udp in": udpNode,
+            "udp out": udpNode,
+            csv: csvNode,
+            html: htmlNode,
+            json: jsonNode,
+            xml: xmlNode,
+            yaml: yamlNode,
+            split: splitNode,
+            join: splitNode,
+            sort: sortNode,
+            batch: batchNode,
+            file: fileNode,
+            "file in": fileNode,
+            watch: watchNode,
+        };
+    }
     
+    getNodeArray(fileString)
+    {
+        const flowData = JSON.parse(fileString);
+        const condFunc = _.cond([
+            [
+                (a) => _.gt(a.length, 0),
+                (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+            ],
+        ]);
 
-    const nodeDict = {
-        function: functionNode,
-        switch: switchNode,
-        change: changeNode,
-        range: rangeNode,
-        template: templateNode,
-        delay: delayNode,
-        trigger: triggerNode,
-        exec: execNode,
-        rbe: rbeNode,
-        inject: injectNode,
-        debug: debugNode,
-        complete: completeNode,
-        catch: catchNode,
-        status: statusNode,
-        "link in": linkNode,
-        "link out": linkNode,
-        "link call": linkNode,
-        comment: commentNode,
-        unknown: unknownNode,
-        "tls-config": tlsNode,
-        "http proxy": httpproxyNode,
-        "mqtt-broker": mqttNode,
-        "mqtt in": mqttNode,
-        "mqtt out": mqttNode,
-        "http request": httprequestNode,
-        "http response": httpinNode,
-        "http in": httpinNode,
-        "websocket-listener": websocketNode,
-        "websocket-client": websocketNode,
-        "websocket out": websocketNode,
-        "websocket in": websocketNode,
-        "tcp in": tcpinNode,
-        "tcp out": tcpinNode,
-        "tcp request": tcpinNode,
-        "udp in": udpNode,
-        "udp out": udpNode,
-        csv: csvNode,
-        html: htmlNode,
-        json: jsonNode,
-        xml: xmlNode,
-        yaml: yamlNode,
-        split: splitNode,
-        join: splitNode,
-        sort: sortNode,
-        batch: batchNode,
-        file: fileNode,
-        "file in": fileNode,
-        watch: watchNode,
-    };
+        const checkInDict = (node) => (node in nodeDict);
+        const nodeArray = _.chain(flowData)
+            .map((node) => node.type)
+            .uniq()
+            .filter(checkInDict)
+            .uniq()
+            .value()
+            .map((node) => nodeDict[node]);
 
+        // console.log(nodeArray)
+
+        const missingNode = _.chain(flowData)
+            .map((node) => node.type)
+            .uniq()
+            .filter(_.negate(checkInDict))
+            .uniq()
+            .value();
+
+        condFunc(missingNode);
+        return _.uniq(nodeArray);
+    }
     
-    const flowData = JSON.parse(fileString);
-    const condFunc = lodash.cond([
-        [
-            (a) => lodash.gt(a.length, 0),
-            (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
-        ],
-    ]);
-
-    const checkInDict = (node) => node in nodeDict;
-    const nodeArray = lodash
-        .chain(flowData)
-        .map((node) => node.type)
-        .uniq()
-        .filter(checkInDict)
-        .uniq()
-        .value()
-        .map((node) => nodeDict[node]);
-
-    // console.log(nodeArray)
-
-    const missingNode = lodash
-        .chain(flowData)
-        .map((node) => node.type)
-        .uniq()
-        .filter(lodash.negate(checkInDict))
-        .uniq()
-        .value();
-
-    condFunc(missingNode);
-    return lodash.uniq(nodeArray);
+    
     
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
@@ -160,4 +163,4 @@ NodeLoader = function(fileString) {
     // return [...new Set(nodeArray)]
 };
 
-module.exports = NodeLoader
+// module.exports = NodeLoader
