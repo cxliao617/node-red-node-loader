@@ -1,9 +1,5 @@
-
-
-module.exports = function NodeLoader(fileString) {
-
-    "use strict";
-    const lodash = require('lodash')
+module.exports = function NodeLoader() {
+    const lodash = require("lodash");
 
     //function node
     const functionNode = require("./nodes/core/function/10-function");
@@ -53,25 +49,25 @@ module.exports = function NodeLoader(fileString) {
     const watchNode = require("./nodes/core/storage/23-watch");
 
     const nodeDict = {
-        "function": functionNode,
-        "switch": switchNode,
-        "change": changeNode,
-        "range": rangeNode,
-        "template": templateNode,
-        "delay": delayNode,
-        "trigger": triggerNode,
-        "exec": execNode,
-        "rbe": rbeNode,
-        "inject": injectNode,
-        "debug": debugNode,
-        "complete": completeNode,
-        "catch": catchNode,
-        "status": statusNode,
+        function: functionNode,
+        switch: switchNode,
+        change: changeNode,
+        range: rangeNode,
+        template: templateNode,
+        delay: delayNode,
+        trigger: triggerNode,
+        exec: execNode,
+        rbe: rbeNode,
+        inject: injectNode,
+        debug: debugNode,
+        complete: completeNode,
+        catch: catchNode,
+        status: statusNode,
         "link in": linkNode,
         "link out": linkNode,
         "link call": linkNode,
-        "comment": commentNode,
-        "unknown": unknownNode,
+        comment: commentNode,
+        unknown: unknownNode,
         "tls-config": tlsNode,
         "http proxy": httpproxyNode,
         "mqtt-broker": mqttNode,
@@ -89,47 +85,52 @@ module.exports = function NodeLoader(fileString) {
         "tcp request": tcpinNode,
         "udp in": udpNode,
         "udp out": udpNode,
-        "csv": csvNode,
-        "html": htmlNode,
-        "json": jsonNode,
-        "xml": xmlNode,
-        "yaml": yamlNode,
-        "split": splitNode,
-        "join": splitNode,
-        "sort": sortNode,
-        "batch": batchNode,
-        "file": fileNode,
+        csv: csvNode,
+        html: htmlNode,
+        json: jsonNode,
+        xml: xmlNode,
+        yaml: yamlNode,
+        split: splitNode,
+        join: splitNode,
+        sort: sortNode,
+        batch: batchNode,
+        file: fileNode,
         "file in": fileNode,
-        "watch": watchNode
+        watch: watchNode,
     };
 
-    const flowData = JSON.parse(fileString);
-    const condFunc = lodash.cond([
-        [
-            (a) => (lodash.gt(a.length, 0)),
-            (a) => (console.info(`[Node Loader] Missing custom node: ${a}`)),
-        ],
-    ]);
+    function getNodeArray(fileString) {
+        const flowData = JSON.parse(fileString);
+        const condFunc = lodash.cond([
+            [
+                (a) => lodash.gt(a.length, 0),
+                (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+            ],
+        ]);
 
-    const checkInDict = (node) => (node in nodeDict)
-    const nodeArray = lodash.chain(flowData)
-        .map((node) => (node.type))
-        .uniq()
-        .filter(checkInDict)
-        .uniq()
-        .value()
-        .map((node) => nodeDict[node])
-        
+        const checkInDict = (node) => node in nodeDict;
+        const nodeArray = lodash
+            .chain(flowData)
+            .map((node) => node.type)
+            .uniq()
+            .filter(checkInDict)
+            .uniq()
+            .value()
+            .map((node) => nodeDict[node]);
+
         // console.log(nodeArray)
 
-    const missingNode = lodash.chain(flowData)
-        .map((node) => (node.type))
-        .uniq()
-        .filter(lodash.negate(checkInDict))
-        .uniq()
-        .value();
+        const missingNode = lodash
+            .chain(flowData)
+            .map((node) => node.type)
+            .uniq()
+            .filter(lodash.negate(checkInDict))
+            .uniq()
+            .value();
 
-    condFunc(missingNode)
+        condFunc(missingNode);
+        return lodash.uniq(nodeArray);
+    }
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
@@ -152,6 +153,6 @@ module.exports = function NodeLoader(fileString) {
     // const uniqleNodeArray = [...new Set(nodeArray)]
     // return uniqleNodeArray
     // console.log(nodeArray,uniqleNodeArray)
-    return lodash.uniq(nodeArray)
+
     // return [...new Set(nodeArray)]
 };
