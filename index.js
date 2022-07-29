@@ -63,7 +63,7 @@ module.exports = function NodeLoader(fileString) {
         "inject": injectNode,
         "debug": debugNode,
         "complete": completeNode,
-        "catch": catchNode,
+        // "catch": catchNode,
         "status": statusNode,
         "link in": linkNode,
         "link out": linkNode,
