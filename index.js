@@ -118,7 +118,7 @@ module.exports = function NodeLoader(fileString) {
         .value()
         .map((node) => nodeDict[node])
         
-        console.log(nodeArray)
+        // console.log(nodeArray)
 
     const missingNode = lodash.chain(flowData)
         .map((node) => (node.type))
