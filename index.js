@@ -1,6 +1,8 @@
 
 
 module.exports = function NodeLoader(fileString) {
+
+    "use strict";
     const lodash = require('lodash')
 
     //function node
