@@ -138,7 +138,7 @@ class NodeLoader{
         };
     }
     
-    getNodeArray(fileString)
+    getNodeArray(fileString,excludeList = [])
     {
         const flowData = JSON.parse(fileString);
         const condFunc = ___default["default"].cond([
@@ -148,7 +148,7 @@ class NodeLoader{
             ],
         ]);
 
-        const checkInDict = (node) => (node in this.nodeDict);
+        const checkInDict = (node) => (node in this.nodeDict && ___default["default"].negate(node in excludeList));
         const nodeArray = ___default["default"].chain(flowData)
             .map((node) => node.type)
             .uniq()

@@ -95,7 +95,7 @@ class NodeLoader{
         };
     }
     
-    getNodeArray(fileString)
+    getNodeArray(fileString,excludeList = [])
     {
         const flowData = JSON.parse(fileString);
         const condFunc = _.cond([
@@ -105,7 +105,7 @@ class NodeLoader{
             ],
         ]);
 
-        const checkInDict = (node) => (node in this.nodeDict);
+        const checkInDict = (node) => (node in this.nodeDict && _.negate(node in excludeList));
         const nodeArray = _.chain(flowData)
             .map((node) => node.type)
             .uniq()
