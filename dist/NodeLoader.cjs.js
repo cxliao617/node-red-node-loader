@@ -78,127 +78,114 @@ var fileNode__default = /*#__PURE__*/_interopDefaultLegacy(fileNode);
 var watchNode__default = /*#__PURE__*/_interopDefaultLegacy(watchNode);
 
 //function node
+class NodeLoader {
+  nodeDict = {};
+
+  constructor() {
+    this.nodeDict = {
+      function: functionNode__default["default"],
+      switch: switchNode__default["default"],
+      change: changeNode__default["default"],
+      range: rangeNode__default["default"],
+      template: templateNode__default["default"],
+      delay: delayNode__default["default"],
+      trigger: triggerNode__default["default"],
+      exec: execNode__default["default"],
+      rbe: rbeNode__default["default"],
+      inject: injectNode__default["default"],
+      debug: debugNode__default["default"],
+      complete: completeNode__default["default"],
+      catch: catchNode__default["default"],
+      status: statusNode__default["default"],
+      "link in": linkNode__default["default"],
+      "link out": linkNode__default["default"],
+      "link call": linkNode__default["default"],
+      comment: commentNode__default["default"],
+      unknown: unknownNode__default["default"],
+      "tls-config": tlsNode__default["default"],
+      "http proxy": httpproxyNode__default["default"],
+      "mqtt-broker": mqttNode__default["default"],
+      "mqtt in": mqttNode__default["default"],
+      "mqtt out": mqttNode__default["default"],
+      "http request": httprequestNode__default["default"],
+      "http response": httpinNode__default["default"],
+      "http in": httpinNode__default["default"],
+      "websocket-listener": websocketNode__default["default"],
+      "websocket-client": websocketNode__default["default"],
+      "websocket out": websocketNode__default["default"],
+      "websocket in": websocketNode__default["default"],
+      "tcp in": tcpinNode__default["default"],
+      "tcp out": tcpinNode__default["default"],
+      "tcp request": tcpinNode__default["default"],
+      "udp in": udpNode__default["default"],
+      "udp out": udpNode__default["default"],
+      csv: csvNode__default["default"],
+      html: htmlNode__default["default"],
+      json: jsonNode__default["default"],
+      xml: xmlNode__default["default"],
+      yaml: yamlNode__default["default"],
+      split: splitNode__default["default"],
+      join: splitNode__default["default"],
+      sort: sortNode__default["default"],
+      batch: batchNode__default["default"],
+      file: fileNode__default["default"],
+      "file in": fileNode__default["default"],
+      watch: watchNode__default["default"]
+    };
+  } // getNodeArray(fileString)
+  // {
+  //     const flowData = JSON.parse(fileString);
+  //     const condFunc = _.cond([
+  //         [
+  //             (a) => _.gt(a.length, 0),
+  //             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+  //         ],
+  //     ]);
+  //     const checkInDict = (node) => (node in this.nodeDict);
+  //     const nodeArray = _.chain(flowData)
+  //         .map((node) => node.type)
+  //         .uniq()
+  //         .filter(checkInDict)
+  //         .uniq()
+  //         .value()
+  //         .map((node) => (this.nodeDict[node]));
+  //     // console.log(nodeArray)
+  //     const missingNode = _.chain(flowData)
+  //         .map((node) => node.type)
+  //         .uniq()
+  //         .filter(_.negate(checkInDict))
+  //         .uniq()
+  //         .value();
+  //     condFunc(missingNode);
+  //     return _.uniq(nodeArray);
+  // }
 
 
-
-
-class NodeLoader{
-    nodeDict = {}
-    constructor(){
-        this.nodeDict = {
-            function: functionNode__default["default"],
-            switch: switchNode__default["default"],
-            change: changeNode__default["default"],
-            range: rangeNode__default["default"],
-            template: templateNode__default["default"],
-            delay: delayNode__default["default"],
-            trigger: triggerNode__default["default"],
-            exec: execNode__default["default"],
-            rbe: rbeNode__default["default"],
-            inject: injectNode__default["default"],
-            debug: debugNode__default["default"],
-            complete: completeNode__default["default"],
-            catch: catchNode__default["default"],
-            status: statusNode__default["default"],
-            "link in": linkNode__default["default"],
-            "link out": linkNode__default["default"],
-            "link call": linkNode__default["default"],
-            comment: commentNode__default["default"],
-            unknown: unknownNode__default["default"],
-            "tls-config": tlsNode__default["default"],
-            "http proxy": httpproxyNode__default["default"],
-            "mqtt-broker": mqttNode__default["default"],
-            "mqtt in": mqttNode__default["default"],
-            "mqtt out": mqttNode__default["default"],
-            "http request": httprequestNode__default["default"],
-            "http response": httpinNode__default["default"],
-            "http in": httpinNode__default["default"],
-            "websocket-listener": websocketNode__default["default"],
-            "websocket-client": websocketNode__default["default"],
-            "websocket out": websocketNode__default["default"],
-            "websocket in": websocketNode__default["default"],
-            "tcp in": tcpinNode__default["default"],
-            "tcp out": tcpinNode__default["default"],
-            "tcp request": tcpinNode__default["default"],
-            "udp in": udpNode__default["default"],
-            "udp out": udpNode__default["default"],
-            csv: csvNode__default["default"],
-            html: htmlNode__default["default"],
-            json: jsonNode__default["default"],
-            xml: xmlNode__default["default"],
-            yaml: yamlNode__default["default"],
-            split: splitNode__default["default"],
-            join: splitNode__default["default"],
-            sort: sortNode__default["default"],
-            batch: batchNode__default["default"],
-            file: fileNode__default["default"],
-            "file in": fileNode__default["default"],
-            watch: watchNode__default["default"],
-        };
-    }
-    
-    // getNodeArray(fileString)
-    // {
-    //     const flowData = JSON.parse(fileString);
-    //     const condFunc = _.cond([
-    //         [
-    //             (a) => _.gt(a.length, 0),
-    //             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
-    //         ],
-    //     ]);
-
-    //     const checkInDict = (node) => (node in this.nodeDict);
-    //     const nodeArray = _.chain(flowData)
-    //         .map((node) => node.type)
-    //         .uniq()
-    //         .filter(checkInDict)
-    //         .uniq()
-    //         .value()
-    //         .map((node) => (this.nodeDict[node]));
-
-    //     // console.log(nodeArray)
-
-    //     const missingNode = _.chain(flowData)
-    //         .map((node) => node.type)
-    //         .uniq()
-    //         .filter(_.negate(checkInDict))
-    //         .uniq()
-    //         .value();
-
-    //     condFunc(missingNode);
-    //     return _.uniq(nodeArray);
-    // }
-    
-    getNodeArray(fileString)
-    {
-        const flowData = JSON.parse(fileString);
-
-    // if (missingNode.length > 0) {
+  getNodeArray(fileString) {
+    const flowData = JSON.parse(fileString); // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
 
-    const originalNodeTypeArray = flowData.map((node) => (node.type));
-    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)];
-    // console.log('uni node',uniqleNodeArray)
+    const originalNodeTypeArray = flowData.map(node => node.type);
+    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]; // console.log('uni node',uniqleNodeArray)
+
     let nodeArray = [];
-    uniqleNodeTypeArray.forEach((node) => {
-        if (nodeDict.hasOwnProperty(node)) {
-            nodeArray.push(nodeDict[node]);
-            // console.log('node type: ',node,nodeDict[node])
-        }
-        else {
-            console.info(`[Node Loader WARNING] ${node} cannot find!!`);
-        }
-    }
-    );
-    // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
+    uniqleNodeTypeArray.forEach(node => {
+      if (nodeDict.hasOwnProperty(node)) {
+        nodeArray.push(nodeDict[node]); // console.log('node type: ',node,nodeDict[node])
+      } else {
+        console.info(`[Node Loader WARNING] ${node} cannot find!!`);
+      }
+    }); // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
     // const uniqleNodeArray = [...new Set(nodeArray)]
     // return uniqleNodeArray
     // console.log(nodeArray,uniqleNodeArray)
 
-    return [...new Set(nodeArray)]
-    }
+    return [...new Set(nodeArray)];
+  }
+
 }
-// module.exports = NodeLoader
+ // module.exports = NodeLoader
 
 exports.NodeLoader = NodeLoader;
+//# sourceMappingURL=NodeLoader.cjs.js.map
