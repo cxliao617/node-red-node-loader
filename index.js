@@ -116,6 +116,7 @@ module.exports = function NodeLoader(fileString) {
         .filter(checkInDict)
         .uniq()
         .map((node) => nodeDict[node])
+        .uniq()
         .value()
 
     const missingNode = lodash.chain(flowData)
@@ -145,9 +146,9 @@ module.exports = function NodeLoader(fileString) {
     // }
     // )
     
-    const uniqleNodeArray = [...new Set(nodeArray)]
+    // const uniqleNodeArray = [...new Set(nodeArray)]
 
-    console.log(nodeArray,uniqleNodeArray)
-    return uniqleNodeArray
+    // console.log(nodeArray,uniqleNodeArray)
+    return nodeArray
     // return [...new Set(nodeArray)]
 };
