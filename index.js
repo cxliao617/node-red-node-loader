@@ -4,7 +4,7 @@ module.exports = function NodeLoader(fileString) {
     const lodash = require('lodash')
 
     //function node
-    const functionNode = require("@node-red/nodes/core/function/10-function");
+    const functionNode = require("@node-red/nodes/core/function/10-function.js");
     const switchNode = require("@node-red/nodes/core/function/10-switch");
     const changeNode = require("@node-red/nodes/core/function/15-change");
     const rangeNode = require("@node-red/nodes/core/function/16-range");
@@ -18,7 +18,7 @@ module.exports = function NodeLoader(fileString) {
     const injectNode = require("@node-red/nodes/core/common/20-inject");
     const debugNode = require("@node-red/nodes/core/common/21-debug");
     const completeNode = require("@node-red/nodes/core/common/24-complete");
-    const catchNode = require("@node-red/nodes/core/common/25-catch");
+    const catchNode = require("@node-red/nodes/core/common/25-catch.j");
     const statusNode = require("@node-red/nodes/core/common/25-status");
     const linkNode = require("@node-red/nodes/core/common/60-link");
     const commentNode = require("@node-red/nodes/core/common/90-comment");
