@@ -113,8 +113,9 @@ module.exports = function NodeLoader(fileString) {
         .map((node) => node.type)
         .filter(checkInDict)
         .uniq()
+        .value()
         .map((node) => nodeDict[node])
-        .value();
+        
     const missingNode = _.chain(flowData)
         .map((node) => node.type)
         .filter(_.negate(checkInDict))
@@ -142,5 +143,5 @@ module.exports = function NodeLoader(fileString) {
     // )
     // const uniqleNodeArray = [...new Set(nodeArray)]
     // return uniqleNodeArray
-    return nodeArray;
+    return _.uniq(nodeArray);
 };
