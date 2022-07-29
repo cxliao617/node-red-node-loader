@@ -35,197 +35,128 @@ import fileNode from '@node-red/nodes/core/storage/10-file';
 import watchNode from '@node-red/nodes/core/storage/23-watch';
 import 'lodash';
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, "prototype", {
-    writable: false
-  });
-  return Constructor;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-  return arr2;
-}
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-var NodeLoader = /*#__PURE__*/function () {
-  function NodeLoader() {
-    _classCallCheck(this, NodeLoader);
-
-    _defineProperty(this, "nodeDict", {});
-
-    this.nodeDict = {
-      "function": functionNode,
-      "switch": switchNode,
-      change: changeNode,
-      range: rangeNode,
-      template: templateNode,
-      delay: delayNode,
-      trigger: triggerNode,
-      exec: execNode,
-      rbe: rbeNode,
-      inject: injectNode,
-      debug: debugNode,
-      complete: completeNode,
-      "catch": catchNode,
-      status: statusNode,
-      "link in": linkNode,
-      "link out": linkNode,
-      "link call": linkNode,
-      comment: commentNode,
-      unknown: unknownNode,
-      "tls-config": tlsNode,
-      "http proxy": httpproxyNode,
-      "mqtt-broker": mqttNode,
-      "mqtt in": mqttNode,
-      "mqtt out": mqttNode,
-      "http request": httprequestNode,
-      "http response": httpinNode,
-      "http in": httpinNode,
-      "websocket-listener": websocketNode,
-      "websocket-client": websocketNode,
-      "websocket out": websocketNode,
-      "websocket in": websocketNode,
-      "tcp in": tcpinNode,
-      "tcp out": tcpinNode,
-      "tcp request": tcpinNode,
-      "udp in": udpNode,
-      "udp out": udpNode,
-      csv: csvNode,
-      html: htmlNode,
-      json: jsonNode,
-      xml: xmlNode,
-      yaml: yamlNode,
-      split: splitNode,
-      join: splitNode,
-      sort: sortNode,
-      batch: batchNode,
-      file: fileNode,
-      "file in": fileNode,
-      watch: watchNode
-    };
-  } // getNodeArray(fileString)
-  // {
-  //     const flowData = JSON.parse(fileString);
-  //     const condFunc = _.cond([
-  //         [
-  //             (a) => _.gt(a.length, 0),
-  //             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
-  //         ],
-  //     ]);
-  //     const checkInDict = (node) => (node in this.nodeDict);
-  //     const nodeArray = _.chain(flowData)
-  //         .map((node) => node.type)
-  //         .uniq()
-  //         .filter(checkInDict)
-  //         .uniq()
-  //         .value()
-  //         .map((node) => (this.nodeDict[node]));
-  //     // console.log(nodeArray)
-  //     const missingNode = _.chain(flowData)
-  //         .map((node) => node.type)
-  //         .uniq()
-  //         .filter(_.negate(checkInDict))
-  //         .uniq()
-  //         .value();
-  //     condFunc(missingNode);
-  //     return _.uniq(nodeArray);
-  // }
+//function node
 
 
-  _createClass(NodeLoader, [{
-    key: "getNodeArray",
-    value: function getNodeArray(fileString) {
-      var flowData = JSON.parse(fileString); // if (missingNode.length > 0) {
-      //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
-      // }
-
-      var originalNodeTypeArray = flowData.map(function (node) {
-        return node.type;
-      });
-
-      var uniqleNodeTypeArray = _toConsumableArray(new Set(originalNodeTypeArray)); // console.log('uni node',uniqleNodeArray)
 
 
-      var nodeArray = [];
-      uniqleNodeTypeArray.forEach(function (node) {
-        if (nodeDict.hasOwnProperty(node)) {
-          nodeArray.push(nodeDict[node]); // console.log('node type: ',node,nodeDict[node])
-        } else {
-          console.info("[Node Loader WARNING] ".concat(node, " cannot find!!"));
-        }
-      }); // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
-      // const uniqleNodeArray = [...new Set(nodeArray)]
-      // return uniqleNodeArray
-      // console.log(nodeArray,uniqleNodeArray)
-
-      return _toConsumableArray(new Set(nodeArray));
+class NodeLoader{
+    nodeDict = {}
+    constructor(){
+        this.nodeDict = {
+            function: functionNode,
+            switch: switchNode,
+            change: changeNode,
+            range: rangeNode,
+            template: templateNode,
+            delay: delayNode,
+            trigger: triggerNode,
+            exec: execNode,
+            rbe: rbeNode,
+            inject: injectNode,
+            debug: debugNode,
+            complete: completeNode,
+            catch: catchNode,
+            status: statusNode,
+            "link in": linkNode,
+            "link out": linkNode,
+            "link call": linkNode,
+            comment: commentNode,
+            unknown: unknownNode,
+            "tls-config": tlsNode,
+            "http proxy": httpproxyNode,
+            "mqtt-broker": mqttNode,
+            "mqtt in": mqttNode,
+            "mqtt out": mqttNode,
+            "http request": httprequestNode,
+            "http response": httpinNode,
+            "http in": httpinNode,
+            "websocket-listener": websocketNode,
+            "websocket-client": websocketNode,
+            "websocket out": websocketNode,
+            "websocket in": websocketNode,
+            "tcp in": tcpinNode,
+            "tcp out": tcpinNode,
+            "tcp request": tcpinNode,
+            "udp in": udpNode,
+            "udp out": udpNode,
+            csv: csvNode,
+            html: htmlNode,
+            json: jsonNode,
+            xml: xmlNode,
+            yaml: yamlNode,
+            split: splitNode,
+            join: splitNode,
+            sort: sortNode,
+            batch: batchNode,
+            file: fileNode,
+            "file in": fileNode,
+            watch: watchNode,
+        };
     }
-  }]);
+    
+    // getNodeArray(fileString)
+    // {
+    //     const flowData = JSON.parse(fileString);
+    //     const condFunc = _.cond([
+    //         [
+    //             (a) => _.gt(a.length, 0),
+    //             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+    //         ],
+    //     ]);
 
-  return NodeLoader;
-}();
- // module.exports = NodeLoader
+    //     const checkInDict = (node) => (node in this.nodeDict);
+    //     const nodeArray = _.chain(flowData)
+    //         .map((node) => node.type)
+    //         .uniq()
+    //         .filter(checkInDict)
+    //         .uniq()
+    //         .value()
+    //         .map((node) => (this.nodeDict[node]));
+
+    //     // console.log(nodeArray)
+
+    //     const missingNode = _.chain(flowData)
+    //         .map((node) => node.type)
+    //         .uniq()
+    //         .filter(_.negate(checkInDict))
+    //         .uniq()
+    //         .value();
+
+    //     condFunc(missingNode);
+    //     return _.uniq(nodeArray);
+    // }
+    
+    getNodeArray(fileString)
+    {
+        const flowData = JSON.parse(fileString);
+
+    // if (missingNode.length > 0) {
+    //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
+    // }
+
+    const originalNodeTypeArray = flowData.map((node) => (node.type));
+    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)];
+    // console.log('uni node',uniqleNodeArray)
+    let nodeArray = [];
+    uniqleNodeTypeArray.forEach((node) => {
+        if (nodeDict.hasOwnProperty(node)) {
+            nodeArray.push(nodeDict[node]);
+            // console.log('node type: ',node,nodeDict[node])
+        }
+        else {
+            console.info(`[Node Loader WARNING] ${node} cannot find!!`);
+        }
+    }
+    );
+    // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
+    // const uniqleNodeArray = [...new Set(nodeArray)]
+    // return uniqleNodeArray
+    // console.log(nodeArray,uniqleNodeArray)
+
+    return [...new Set(nodeArray)]
+    }
+}
+// module.exports = NodeLoader
 
 export { NodeLoader };
-//# sourceMappingURL=NodeLoader.esm.js.map
