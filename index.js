@@ -63,7 +63,7 @@ module.exports = function NodeLoader(fileString) {
         "inject": injectNode,
         "debug": debugNode,
         "complete": completeNode,
-        // "catch": catchNode,
+        "catch": catchNode,
         "status": statusNode,
         "link in": linkNode,
         "link out": linkNode,
@@ -115,9 +115,10 @@ module.exports = function NodeLoader(fileString) {
         .uniq()
         .filter(checkInDict)
         .uniq()
-        .map((node) => nodeDict[node])
-        .uniq()
         .value()
+        .map((node) => nodeDict[node])
+        
+        console.log(nodeArray)
 
     const missingNode = lodash.chain(flowData)
         .map((node) => (node.type))
@@ -149,6 +150,6 @@ module.exports = function NodeLoader(fileString) {
     // const uniqleNodeArray = [...new Set(nodeArray)]
 
     // console.log(nodeArray,uniqleNodeArray)
-    return nodeArray
+    return lodash.uniq(nodeArray)
     // return [...new Set(nodeArray)]
 };
