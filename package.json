@@ -17,7 +17,6 @@
   "author": "cxliao617",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "node-red": "^3.0.1"
+    "lodash": "^4.17.21"
   }
 }
