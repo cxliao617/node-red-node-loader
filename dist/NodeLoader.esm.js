@@ -33,7 +33,7 @@ import sortNode from '@node-red/nodes/core/sequence/18-sort';
 import batchNode from '@node-red/nodes/core/sequence/19-batch';
 import fileNode from '@node-red/nodes/core/storage/10-file';
 import watchNode from '@node-red/nodes/core/storage/23-watch';
-import _ from 'lodash';
+import 'lodash';
 
 //function node
 
@@ -95,64 +95,67 @@ class NodeLoader{
         };
     }
     
+    // getNodeArray(fileString)
+    // {
+    //     const flowData = JSON.parse(fileString);
+    //     const condFunc = _.cond([
+    //         [
+    //             (a) => _.gt(a.length, 0),
+    //             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+    //         ],
+    //     ]);
+
+    //     const checkInDict = (node) => (node in this.nodeDict);
+    //     const nodeArray = _.chain(flowData)
+    //         .map((node) => node.type)
+    //         .uniq()
+    //         .filter(checkInDict)
+    //         .uniq()
+    //         .value()
+    //         .map((node) => (this.nodeDict[node]));
+
+    //     // console.log(nodeArray)
+
+    //     const missingNode = _.chain(flowData)
+    //         .map((node) => node.type)
+    //         .uniq()
+    //         .filter(_.negate(checkInDict))
+    //         .uniq()
+    //         .value();
+
+    //     condFunc(missingNode);
+    //     return _.uniq(nodeArray);
+    // }
+    
     getNodeArray(fileString)
     {
         const flowData = JSON.parse(fileString);
-        const condFunc = _.cond([
-            [
-                (a) => _.gt(a.length, 0),
-                (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
-            ],
-        ]);
 
-        const checkInDict = (node) => (node in this.nodeDict);
-        const nodeArray = _.chain(flowData)
-            .map((node) => node.type)
-            .uniq()
-            .filter(checkInDict)
-            .uniq()
-            .value()
-            .map((node) => (this.nodeDict[node]));
-
-        // console.log(nodeArray)
-
-        const missingNode = _.chain(flowData)
-            .map((node) => node.type)
-            .uniq()
-            .filter(_.negate(checkInDict))
-            .uniq()
-            .value();
-
-        condFunc(missingNode);
-        return _.uniq(nodeArray);
-    }
-    
-    
-    
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
 
-    // const originalNodeTypeArray = flowData.map((node) => (node.type))
-    // const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
-    // // console.log('uni node',uniqleNodeArray)
-    // let nodeArray = []
-    // uniqleNodeTypeArray.forEach((node) => {
-    //     if (nodeDict.hasOwnProperty(node)) {
-    //         nodeArray.push(nodeDict[node])
-    //         // console.log('node type: ',node,nodeDict[node])
-    //     }
-    //     else {
-    //         console.info(`[Node Loader WARNING] ${node} cannot find!!`)
-    //     }
-    // }
-    // )
+    const originalNodeTypeArray = flowData.map((node) => (node.type));
+    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)];
+    // console.log('uni node',uniqleNodeArray)
+    let nodeArray = [];
+    uniqleNodeTypeArray.forEach((node) => {
+        if (nodeDict.hasOwnProperty(node)) {
+            nodeArray.push(nodeDict[node]);
+            // console.log('node type: ',node,nodeDict[node])
+        }
+        else {
+            console.info(`[Node Loader WARNING] ${node} cannot find!!`);
+        }
+    }
+    );
     // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
     // const uniqleNodeArray = [...new Set(nodeArray)]
     // return uniqleNodeArray
     // console.log(nodeArray,uniqleNodeArray)
 
-    // return [...new Set(nodeArray)]
+    return [...new Set(nodeArray)]
+    }
 }
 // module.exports = NodeLoader
 

@@ -37,7 +37,7 @@ var sortNode = require('@node-red/nodes/core/sequence/18-sort');
 var batchNode = require('@node-red/nodes/core/sequence/19-batch');
 var fileNode = require('@node-red/nodes/core/storage/10-file');
 var watchNode = require('@node-red/nodes/core/storage/23-watch');
-var _ = require('lodash');
+require('lodash');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -76,7 +76,6 @@ var sortNode__default = /*#__PURE__*/_interopDefaultLegacy(sortNode);
 var batchNode__default = /*#__PURE__*/_interopDefaultLegacy(batchNode);
 var fileNode__default = /*#__PURE__*/_interopDefaultLegacy(fileNode);
 var watchNode__default = /*#__PURE__*/_interopDefaultLegacy(watchNode);
-var ___default = /*#__PURE__*/_interopDefaultLegacy(_);
 
 //function node
 
@@ -138,64 +137,67 @@ class NodeLoader{
         };
     }
     
+    // getNodeArray(fileString)
+    // {
+    //     const flowData = JSON.parse(fileString);
+    //     const condFunc = _.cond([
+    //         [
+    //             (a) => _.gt(a.length, 0),
+    //             (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+    //         ],
+    //     ]);
+
+    //     const checkInDict = (node) => (node in this.nodeDict);
+    //     const nodeArray = _.chain(flowData)
+    //         .map((node) => node.type)
+    //         .uniq()
+    //         .filter(checkInDict)
+    //         .uniq()
+    //         .value()
+    //         .map((node) => (this.nodeDict[node]));
+
+    //     // console.log(nodeArray)
+
+    //     const missingNode = _.chain(flowData)
+    //         .map((node) => node.type)
+    //         .uniq()
+    //         .filter(_.negate(checkInDict))
+    //         .uniq()
+    //         .value();
+
+    //     condFunc(missingNode);
+    //     return _.uniq(nodeArray);
+    // }
+    
     getNodeArray(fileString)
     {
         const flowData = JSON.parse(fileString);
-        const condFunc = ___default["default"].cond([
-            [
-                (a) => ___default["default"].gt(a.length, 0),
-                (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
-            ],
-        ]);
 
-        const checkInDict = (node) => (node in this.nodeDict);
-        const nodeArray = ___default["default"].chain(flowData)
-            .map((node) => node.type)
-            .uniq()
-            .filter(checkInDict)
-            .uniq()
-            .value()
-            .map((node) => (this.nodeDict[node]));
-
-        // console.log(nodeArray)
-
-        const missingNode = ___default["default"].chain(flowData)
-            .map((node) => node.type)
-            .uniq()
-            .filter(___default["default"].negate(checkInDict))
-            .uniq()
-            .value();
-
-        condFunc(missingNode);
-        return ___default["default"].uniq(nodeArray);
-    }
-    
-    
-    
     // if (missingNode.length > 0) {
     //     console.info(`[Node Loader] Missing custom node: ${missingNode}`)
     // }
 
-    // const originalNodeTypeArray = flowData.map((node) => (node.type))
-    // const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)]
-    // // console.log('uni node',uniqleNodeArray)
-    // let nodeArray = []
-    // uniqleNodeTypeArray.forEach((node) => {
-    //     if (nodeDict.hasOwnProperty(node)) {
-    //         nodeArray.push(nodeDict[node])
-    //         // console.log('node type: ',node,nodeDict[node])
-    //     }
-    //     else {
-    //         console.info(`[Node Loader WARNING] ${node} cannot find!!`)
-    //     }
-    // }
-    // )
+    const originalNodeTypeArray = flowData.map((node) => (node.type));
+    const uniqleNodeTypeArray = [...new Set(originalNodeTypeArray)];
+    // console.log('uni node',uniqleNodeArray)
+    let nodeArray = [];
+    uniqleNodeTypeArray.forEach((node) => {
+        if (nodeDict.hasOwnProperty(node)) {
+            nodeArray.push(nodeDict[node]);
+            // console.log('node type: ',node,nodeDict[node])
+        }
+        else {
+            console.info(`[Node Loader WARNING] ${node} cannot find!!`);
+        }
+    }
+    );
     // console.log(originalNodeTypeArray,uniqleNodeTypeArray)
     // const uniqleNodeArray = [...new Set(nodeArray)]
     // return uniqleNodeArray
     // console.log(nodeArray,uniqleNodeArray)
 
-    // return [...new Set(nodeArray)]
+    return [...new Set(nodeArray)]
+    }
 }
 // module.exports = NodeLoader
 
