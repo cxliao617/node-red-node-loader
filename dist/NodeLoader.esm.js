@@ -128,7 +128,38 @@ class NodeLoader{
         condFunc(missingNode);
         return _.uniq(nodeArray);
     }
-    
+    getNodeArrayFromFlow(flowData,excludeList = [])
+    {
+        const condFunc = _.cond([
+            [
+                (a) => _.gt(a.length, 0),
+                (a) => console.info(`[Node Loader] Missing custom node: ${a}`),
+            ],
+        ]);
+
+        const checkInDict = (node) => (node in this.nodeDict);
+        const excludeFunc = (node) => (excludeList.includes(node));
+        const nodeArray = _.chain(flowData)
+            .map((node) => node.type)
+            .uniq()
+            .filter(checkInDict)
+            .filter(_.negate(excludeFunc))
+            .uniq()
+            .value()
+            .map((node) => (this.nodeDict[node]));
+
+        // console.log(nodeArray)
+
+        const missingNode = _.chain(flowData)
+            .map((node) => node.type)
+            .uniq()
+            .filter(_.negate(checkInDict))
+            .uniq()
+            .value();
+
+        condFunc(missingNode);
+        return _.uniq(nodeArray);
+    }
     // getNodeArray(fileString)
     // {
     //     const flowData = JSON.parse(fileString);
