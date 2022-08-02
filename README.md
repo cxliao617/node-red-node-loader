@@ -10,6 +10,7 @@ $ npm i node-red-node-loader
 ```javascript
 const nodeArr = new NodeLoader().getNodeArray(fileString)
 const nodeArr = new NodeLoader().getNodeArray(fileString,excludeList)
+const nodeArr = new NodeLoader().getNodeArrayFromFlow(flowData,excludeList)
 //excludeList is optional
 ```
 
@@ -37,7 +38,7 @@ describe("test node red flow",()=>{
         fs.readFile(FILENAME,'utf-8').then(async(res)=>{
             const flow = JSON.parse(res)
             const nodeArr = new NodeLoader().getNodeArray(res)
-            
+            const nodeArr2 = new NodeLoader().getNodeArrayFromFlow(flow)
             helper.load([...nodeArr],flow,()=>{
                 const n0 = helper.getNode("n0")
                 const n1 = helper.getNode("n1")
